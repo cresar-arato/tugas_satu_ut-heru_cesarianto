@@ -145,7 +145,6 @@ class WarungJava {
 	}
 
 	public static void hitungdancetak(Menu[] pesanMenu, int[] jmlhMenu) {
-		// TODO Auto-generated method stub
 		double totBiaya = 0;
 		double totPesan1 = 0, totPesan2 = 0, totPesan3 = 0, totPesan4 = 0;
 		double diskon = 0;
