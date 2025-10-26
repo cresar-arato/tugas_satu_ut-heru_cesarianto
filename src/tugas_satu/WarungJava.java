@@ -140,7 +140,6 @@ class WarungJava {
 		double totBiaya = 0;
 		double totPesan1 = 0, totPesan2 = 0, totPesan3 = 0, totPesan4 = 0;
 		double diskon = 0;
-		double pajak = totBiaya * 0.1; //pajak 10%
 		double pelayanan = 20000;
 		
 		System.out.println("");
@@ -172,22 +171,29 @@ class WarungJava {
 		}
 		System.out.println("----------------------------------------");
 		System.out.printf("Total Harga : \t\t\t Rp. %d\n", (int)totBiaya);
-		
-		if (totBiaya > 100000) {
-			diskon = totBiaya * 0.1;
-			System.out.printf("Diskon (10%%) : \t\t\t Rp. -%d\n",(int)diskon);
-		}
-		
+
+		//pajak 10%
+		double pajak = totBiaya * 0.1;
 		System.out.printf("Pajak (10%%) : \t\t\t Rp. %d\n",(int)pajak);
+
+		//jasa pelayanan
 		System.out.printf("Biaya Pelayanan : \t\t Rp. %d\n",(int)pelayanan);
 		
-		double totAkhir = (totBiaya + pajak) - diskon + pelayanan;
+		double total = totBiaya + pajak + pelayanan;
+		
+		if (total > 100000) {
+			diskon = total * 0.1;
+			System.out.println("");
+			System.out.println("Pengurang");
+			System.out.printf("Diskon (10%%) : \t\t\t Rp. -%d\n",(int)diskon);
+		}
+		double totAkhir = total - diskon;
 		System.out.println("----------------------------------------");
 		System.out.printf("Total Bayar : \t\t\t Rp. %d\n",(int)totAkhir);
 		System.out.println("");
 		System.out.println("########################################");
 		
-		if(totBiaya > 50000) {
+		if(total > 50000) {
 			System.out.println("------------Promo Spesial---------------");
 			String gratisMinuman = "";
 			if(pesanMenu[0] != null && pesanMenu[0].getKategori().equals("Minuman")) gratisMinuman = pesanMenu[0].getNama();
