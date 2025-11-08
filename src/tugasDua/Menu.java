@@ -1,4 +1,4 @@
-package tugas_satu;
+package tugasDua;
 
 class Menu {
 	String namaitem;
