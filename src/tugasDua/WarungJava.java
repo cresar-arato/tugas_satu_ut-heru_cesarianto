@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Scanner;
 
 class WarungJava {
+	// --- METODE UTAMA PROGRAM ---
+	public static void main(String[] args) {
+        mainMenu();
+    }
 	private static final Scanner scanner = new Scanner(System.in);
 
     // tampilMenu menggunakan List dan menampilkan nomor indeks untuk admin
@@ -51,7 +55,6 @@ class WarungJava {
     }
 
     // --- MENU UTAMA ---
-
     public static void mainMenu() {
         while (true) {
             System.out.println("\n===== MENU UTAMA WARUNG JAVA =====");
@@ -70,7 +73,8 @@ class WarungJava {
                     menuPengelolaan();
                     break;
                 case "3":
-                    System.out.println("Terima kasih telah menggunakan Warung Java. Sampai jumpa!");
+                    System.out.println("");
+                    System.out.println("Terima kasih dan Sampai jumpa!");
                     return;
                 default:
                     System.err.println("❌ Pilihan tidak valid. Silakan masukkan 1, 2, atau 3.");
@@ -79,7 +83,6 @@ class WarungJava {
     }
 
     // --- MENU 1: PEMESANAN PELANGGAN ---
-
     public static void menuPemesanan() {
         List<Menu> daftarMenu = Menu.getDaftarMenu();
         List<Menu> pesanMenu = new ArrayList<>();
@@ -146,7 +149,6 @@ class WarungJava {
     }
     
     // --- MENU 2: PENGELOLAAN MENU (ADMIN) ---
-
     public static void menuPengelolaan() {
         List<Menu> daftarMenu = Menu.getDaftarMenu();
 
@@ -363,10 +365,5 @@ class WarungJava {
        System.out.println("");
        System.out.println("Terimah Kasih Sudah Datang ke Warung Java");
        System.out.println("Sampai Jumpa dan Hati-Hati di Jalan :)");
-    }
-
-    // --- METODE UTAMA PROGRAM ---
-    public static void main(String[] args) {
-        mainMenu();
     }
 }
