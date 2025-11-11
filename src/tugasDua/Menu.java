@@ -41,6 +41,6 @@ class Menu {
 
     // Getter tetap sama
     public String getNama() { return this.namaitem; }
-    public double getHarga() { return this.harga; }
+    public int getHarga() { return this.harga; }
     public String getKategori() { return this.kategori; }
 }

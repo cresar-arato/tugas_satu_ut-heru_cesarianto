@@ -305,9 +305,9 @@ class WarungJava {
     public static void hitungdancetak(List<Menu> pesanMenu, List<Integer> jmlhMenu) {
        // Logika hitungdancetak yang sama dengan perbaikan sebelumnya, 
        // namun diadaptasi untuk List dan mencari promo Minuman secara dinamis.
-       double totBiaya = 0.0;
-       double diskon = 0.0;
-       double pelayanan = 20000.0;
+       int totBiaya = 0;
+       int diskon = 0;
+       int pelayanan = 20000;
        
        System.out.println("\n========================================");
        System.out.println("             >>Warung Java<<            ");
@@ -322,7 +322,7 @@ class WarungJava {
            Menu menu = pesanMenu.get(i);
            int jumlah = jmlhMenu.get(i);
            
-           double subTotal = menu.getHarga() * jumlah;
+           int subTotal = menu.getHarga() * jumlah;
            System.out.printf("%-15s %d x Rp. %-7d = Rp. %d\n", menu.getNama(), jumlah, (int)menu.getHarga(), (int)subTotal);
            totBiaya += subTotal;
            
@@ -334,20 +334,20 @@ class WarungJava {
 
        System.out.println("----------------------------------------");
        System.out.printf("Total Harga : \t\t\t Rp. %d\n", (int)totBiaya);
-       double pajak = totBiaya * 0.1;
+       int pajak = totBiaya * 10/100;
        System.out.printf("Pajak (10%%) : \t\t\t Rp. %d\n", (int)pajak);
        System.out.printf("Biaya Pelayanan : \t\t Rp. %d\n", (int)pelayanan);
        
-       double total = totBiaya + pajak + pelayanan;
+       int total = totBiaya + pajak + pelayanan;
        
        if (total > 100000.0) {
-          diskon = total * 0.1;
+          diskon = total * 10/100;
           System.out.println("");
           System.out.println("Pengurang");
           System.out.printf("Diskon (10%%) : \t\t\t Rp. -%d\n", (int)diskon);
        }
 
-       double totAkhir = total - diskon;
+       int totAkhir = total - diskon;
        System.out.println("----------------------------------------");
        System.out.printf("Total Bayar : \t\t\t Rp. %d\n", (int)totAkhir);
        System.out.println("");
