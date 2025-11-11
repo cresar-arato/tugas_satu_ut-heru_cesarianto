@@ -194,7 +194,7 @@ class WarungJava {
         String nama = scanner.nextLine();
         
         System.out.print("Harga (contoh: 15000): ");
-        double harga = Double.parseDouble(scanner.nextLine());
+        int harga = Integer.parseInt(scanner.nextLine());
         
         System.out.print("Kategori (Makanan/Minuman): ");
         String kategori = scanner.nextLine();
@@ -234,7 +234,7 @@ class WarungJava {
                     System.out.println("Anda memilih: " + menuToUpdate.getNama() + " (Harga saat ini: Rp. " + (int)menuToUpdate.getHarga() + ")");
                     
                     System.out.print("Masukkan Harga Baru (contoh: 20000): ");
-                    double hargaBaru = Double.parseDouble(scanner.nextLine());
+                    int hargaBaru = Integer.parseInt(scanner.nextLine());
 
                     if (hargaBaru <= 0) {
                         System.err.println("❌ Harga harus positif.");

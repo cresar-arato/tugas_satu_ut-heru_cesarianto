@@ -5,7 +5,7 @@ import java.util.List;
 
 class Menu {
 	String namaitem;
-	double harga;
+	int harga;
 	String kategori;
 
 	// daftarMenu menjadi statis List agar bisa diakses dan diubah >> WarungJava
@@ -13,24 +13,24 @@ class Menu {
     
     // Blok statis untuk inisialisasi menu awal (Hanya dijalankan sekali)
     static {
-        daftarMenu.add(new Menu("Nasi Campur", 15000.0, "Makanan"));
-        daftarMenu.add(new Menu("Nasi Kuning", 17000.0, "Makanan"));
-        daftarMenu.add(new Menu("Lalapan", 18000.0, "Makanan"));
-        daftarMenu.add(new Menu("Soto", 25000.0, "Makanan"));
-        daftarMenu.add(new Menu("Teh", 3000.0, "Minuman"));
-        daftarMenu.add(new Menu("Susu", 5000.0, "Minuman"));
-        daftarMenu.add(new Menu("Kopi", 2000.0, "Minuman"));
-        daftarMenu.add(new Menu("Air", 1000.0, "Minuman"));
+        daftarMenu.add(new Menu("Nasi Campur", 15000, "Makanan"));
+        daftarMenu.add(new Menu("Nasi Kuning", 17000, "Makanan"));
+        daftarMenu.add(new Menu("Lalapan", 18000, "Makanan"));
+        daftarMenu.add(new Menu("Soto", 25000, "Makanan"));
+        daftarMenu.add(new Menu("Teh", 3000, "Minuman"));
+        daftarMenu.add(new Menu("Susu", 5000, "Minuman"));
+        daftarMenu.add(new Menu("Kopi", 2000, "Minuman"));
+        daftarMenu.add(new Menu("Air", 1000, "Minuman"));
     }
 
-    public Menu(String namaitem, double harga, String kategori) {
+    public Menu(String namaitem, int harga, String kategori) {
         this.namaitem = namaitem;
         this.harga = harga;
         this.kategori = kategori;
     }
 
     // Setter untuk memungkinkan perubahan harga
-    public void setHarga(double harga) {
+    public void setHarga(int harga) {
         this.harga = harga;
     }
 
