@@ -40,7 +40,7 @@ class WarungJava {
     }
     
     // tampilMenu menggunakan List dan menampilkan nomor indeks untuk admin
-    public static void tampilMenu(List<Menu> daftarMenu, boolean showIndex) {
+    public static void tampilMenu(List<Menu> daftarMenu) {
         System.out.println("========================================");
         System.out.println("          >>Menu Warung Java<<          ");
         System.out.println("========================================");
@@ -86,7 +86,7 @@ class WarungJava {
         List<Menu> pesanMenu = new ArrayList<>();
         List<Integer> jmlhMenu = new ArrayList<>();
 
-        tampilMenu(daftarMenu, false);
+        tampilMenu(daftarMenu);
 
         System.out.println("\n========================================");
         System.out.println(">>MULAI PEMESANAN (Ketik 'selesai' untuk mengakhiri)<<");
@@ -172,7 +172,7 @@ class WarungJava {
                         hapusMenu(daftarMenu);
                         break;
                     case "4":
-                        tampilMenu(daftarMenu, true);
+                        tampilMenu(daftarMenu);
                         break;
                     case "5":
                         return; // Kembali ke mainMenu()
@@ -214,9 +214,7 @@ class WarungJava {
                 System.out.println("Kembali ke menu pengelolaan...");
                 break;
             }
-
-        }
-        
+        } 
     }
     
     // --- FUNGSI ADMIN: UBAH HARGA ---
@@ -226,46 +224,53 @@ class WarungJava {
             return;
         }
         
-        tampilMenu(daftarMenu, true);
+        tampilMenu(daftarMenu);
         System.out.println("\n--- Ubah Harga Menu ---");
         
         while (true) {
-            System.out.print("Masukkan Nomor Menu yang ingin diubah (atau 'batal'): ");
-            String input = scanner.nextLine().trim();
+            System.out.print("Masukkan Nama Menu yang ingin diubah (atau 'batal'): ");
+            String inputNama = scanner.nextLine().trim();
 
-            if (input.equalsIgnoreCase("batal")) return;
+            if (inputNama.equalsIgnoreCase("batal")) {
+                System.out.println("Perubahan dibatalkan. Kembali ke menu pengelolaan...");
+                return;
+                }
 
-            try {
-                int nomor = Integer.parseInt(input);
-                int index = nomor - 1;
+            //Cari objek Menu berdasarkan nama
+            Menu menuToUpdate = cariMenu(inputNama, daftarMenu); 
 
-                if (index >= 0 && index < daftarMenu.size()) {
-                    Menu menuToUpdate = daftarMenu.get(index);
-                    System.out.println("Anda memilih: " + menuToUpdate.getNama() + " (Harga saat ini: Rp. " + (int)menuToUpdate.getHarga() + ")");
-                    
-                    System.out.print("Masukkan Harga Baru (contoh: 20000): ");
-                    int hargaBaru = Integer.parseInt(scanner.nextLine());
+            if (menuToUpdate != null) {
+                System.out.println("Anda memilih: **" + menuToUpdate.getNama() + "** (Harga saat ini: Rp. " + (int)menuToUpdate.getHarga() + ")");
+                
+                System.out.print("Masukkan Harga Baru (contoh: 20000): ");
+                String inputHarga = scanner.nextLine();
+                
+                try {
+                    int hargaBaru = Integer.parseInt(inputHarga);
 
                     if (hargaBaru <= 0) {
-                        System.err.println("❌ Harga harus positif.");
+                        System.err.println("❌ Harga harus positif. Coba lagi.");
                         continue;
                     }
 
+                    //Konfirmasi Perubahan
                     System.out.print("Yakin ingin mengubah harga " + menuToUpdate.getNama() + " menjadi Rp. " + (int)hargaBaru + "? (Ya/Tidak): ");
                     String konfirmasi = scanner.nextLine();
 
                     if (konfirmasi.equalsIgnoreCase("Ya")) {
                         menuToUpdate.setHarga(hargaBaru);
-                        System.out.println("✅ Harga menu berhasil diubah.");
+                        System.out.println("✅ Harga menu **" + menuToUpdate.getNama() + "** berhasil diubah.");
                     } else {
                         System.out.println("Perubahan dibatalkan.");
                     }
-                    return; // Kembali ke menu pengelolaan setelah selesai
-                } else {
-                    System.err.println("❌ Nomor menu tidak valid. Coba lagi.");
+                    return; // Keluar dari loop setelah selesai
+                    
+                } catch (NumberFormatException e) {
+                    System.err.println("❌ Input harga harus berupa angka. Coba lagi.");
                 }
-            } catch (NumberFormatException e) {
-                System.err.println("❌ Input harus berupa angka.");
+
+            } else {
+                System.err.println("❌ Maaf, menu '" + inputNama + "' tidak ditemukan. Coba lagi.");
             }
         }
     }
@@ -277,7 +282,7 @@ class WarungJava {
             return;
         }
 
-        tampilMenu(daftarMenu, true);
+        tampilMenu(daftarMenu);
         System.out.println("\n--- Hapus Menu ---");
 
         while (true) {
