@@ -11,49 +11,6 @@ class WarungJava {
     }
 	private static final Scanner scanner = new Scanner(System.in);
 
-    // tampilMenu menggunakan List dan menampilkan nomor indeks untuk admin
-    public static void tampilMenu(List<Menu> daftarMenu, boolean showIndex) {
-        System.out.println("========================================");
-        System.out.println("          >>Menu Warung Java<<          ");
-        System.out.println("========================================");
-        System.out.println("");
-
-        int index = 0;
-        System.out.println("----Makanan----");
-        for (Menu menu : daftarMenu) {
-            if (menu.getKategori().equalsIgnoreCase("Makanan")) {
-                String prefix = showIndex ? (index + 1) + ". " : "";
-                System.out.printf("%s%-20s - Rp. %d\n", prefix, menu.getNama(), (int)menu.getHarga());
-            }
-            index++;
-        }
-
-        System.out.println("");
-        System.out.println("----Minuman----");
-        index = 0; // Reset index untuk penomoran
-        for (Menu menu : daftarMenu) {
-             if (menu.getKategori().equalsIgnoreCase("Minuman")) {
-                String prefix = showIndex ? (index + 1) + ". " : "";
-                System.out.printf("%s%-20s - Rp. %d\n", prefix, menu.getNama(), (int)menu.getHarga());
-            }
-            index++;
-        }
-        System.out.println("");
-        System.out.println("========================================");
-    }
-
-    // Mengganti cariMenu agar menerima List
-    public static Menu cariMenu(String namaMenu, List<Menu> daftarMenu) {
-        String cari = namaMenu.toLowerCase().trim();
-        for (Menu menu : daftarMenu) {
-            String namaItem = menu.getNama().toLowerCase();
-            if (namaItem.startsWith(cari) || namaItem.contains(cari)) {
-                return menu;
-            }
-        }
-        return null; 
-    }
-
     // --- MENU UTAMA ---
     public static void mainMenu() {
         while (true) {
@@ -80,6 +37,47 @@ class WarungJava {
                     System.err.println("❌ Pilihan tidak valid. Silakan masukkan 1, 2, atau 3.");
             }
         }
+    }
+    
+    // tampilMenu menggunakan List dan menampilkan nomor indeks untuk admin
+    public static void tampilMenu(List<Menu> daftarMenu, boolean showIndex) {
+        System.out.println("========================================");
+        System.out.println("          >>Menu Warung Java<<          ");
+        System.out.println("========================================");
+        System.out.println("");
+
+        System.out.println("----Makanan----");
+        int noMakanan = 1;
+        for (Menu menu : daftarMenu) {
+            if (menu.getKategori().equalsIgnoreCase("Makanan")) {
+                System.out.printf("%d. %-20s - Rp. %d\n", noMakanan, menu.getNama(), (int)menu.getHarga());
+                noMakanan++;
+            }
+        }
+
+        System.out.println("");
+        System.out.println("----Minuman----");
+        int noMinuman = 1;
+        for (Menu menu : daftarMenu) {
+             if (menu.getKategori().equalsIgnoreCase("Minuman")) {
+                System.out.printf("%d. %-20s - Rp. %d\n", noMinuman, menu.getNama(), (int)menu.getHarga());
+                noMinuman++;
+            }
+        }
+        System.out.println("");
+        System.out.println("========================================");
+    }
+
+    // Mengganti cariMenu agar menerima List
+    public static Menu cariMenu(String namaMenu, List<Menu> daftarMenu) {
+        String cari = namaMenu.toLowerCase().trim();
+        for (Menu menu : daftarMenu) {
+            String nama = menu.getNama().toLowerCase();
+            if (nama.startsWith(cari) || nama.contains(cari)) {
+                return menu;
+            }
+        }
+        return null; 
     }
 
     // --- MENU 1: PEMESANAN PELANGGAN ---
@@ -189,24 +187,36 @@ class WarungJava {
 
     // --- FUNGSI ADMIN: TAMBAH MENU ---
     private static void tambahMenu(List<Menu> daftarMenu) {
-        System.out.println("\n--- Tambah Menu Baru ---");
-        System.out.print("Nama Menu: ");
-        String nama = scanner.nextLine();
+        while(true){
+            System.out.println("\n--- Tambah Menu Baru ---");
+            System.out.print("Nama Menu: ");
+            String nama = scanner.nextLine();
         
-        System.out.print("Harga (contoh: 15000): ");
-        int harga = Integer.parseInt(scanner.nextLine());
+            System.out.print("Harga (contoh: 15000): ");
+            int harga = Integer.parseInt(scanner.nextLine());
         
-        System.out.print("Kategori (Makanan/Minuman): ");
-        String kategori = scanner.nextLine();
+            System.out.print("Kategori (Makanan/Minuman): ");
+            String kategori = scanner.nextLine();
 
-        if (harga <= 0 || (!kategori.equalsIgnoreCase("Makanan") && !kategori.equalsIgnoreCase("Minuman"))) {
-            System.err.println("❌ Input tidak valid. Harga harus positif dan kategori harus Makanan/Minuman.");
-            return;
+            if (harga <= 0 || (!kategori.equalsIgnoreCase("Makanan") && !kategori.equalsIgnoreCase("Minuman"))) {
+                System.err.println("❌ Input tidak valid. Harga harus positif dan kategori harus Makanan/Minuman.");
+                
+            } else{
+                Menu menuBaru = new Menu(nama, harga, kategori);
+                daftarMenu.add(menuBaru);
+                System.out.println("✅ Menu '" + nama + "' berhasil ditambahkan!");
+            }
+            // Pertanyaan untuk menambah menu lagi atau berhenti
+            System.out.print("Tambah menu lagi? (y/n): ");
+            String lagi = scanner.nextLine().trim();
+
+            if (!lagi.equalsIgnoreCase("y")) {
+                System.out.println("Kembali ke menu pengelolaan...");
+                break;
+            }
+
         }
-
-        Menu menuBaru = new Menu(nama, harga, kategori);
-        daftarMenu.add(menuBaru);
-        System.out.println("✅ Menu '" + nama + "' berhasil ditambahkan!");
+        
     }
     
     // --- FUNGSI ADMIN: UBAH HARGA ---

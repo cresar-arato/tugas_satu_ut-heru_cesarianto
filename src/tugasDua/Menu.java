@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Menu {
-	String namaitem;
+	String nama;
 	int harga;
 	String kategori;
 
@@ -23,8 +23,8 @@ class Menu {
         daftarMenu.add(new Menu("Air", 1000, "Minuman"));
     }
 
-    public Menu(String namaitem, int harga, String kategori) {
-        this.namaitem = namaitem;
+    public Menu(String nama, int harga, String kategori) {
+        this.nama = nama;
         this.harga = harga;
         this.kategori = kategori;
     }
@@ -40,7 +40,7 @@ class Menu {
     }
 
     // Getter tetap sama
-    public String getNama() { return this.namaitem; }
+    public String getNama() { return this.nama; }
     public int getHarga() { return this.harga; }
     public String getKategori() { return this.kategori; }
 }
