@@ -39,7 +39,7 @@ class WarungJava {
         }
     }
     
-    // tampilMenu menggunakan List dan menampilkan nomor indeks untuk admin
+    // tampilMenu menggunakan List
     public static void tampilMenu(List<Menu> daftarMenu) {
         System.out.println("========================================");
         System.out.println("          >>Menu Warung Java<<          ");
@@ -199,7 +199,7 @@ class WarungJava {
             String kategori = scanner.nextLine();
 
             if (harga <= 0 || (!kategori.equalsIgnoreCase("Makanan") && !kategori.equalsIgnoreCase("Minuman"))) {
-                System.err.println("❌ Input tidak valid. Harga harus positif dan kategori harus Makanan/Minuman.");
+                System.err.println("❌ Input tidak valid. Harga tidak boleh nol dan kategori harus Makanan/Minuman.");
                 
             } else{
                 Menu menuBaru = new Menu(nama, harga, kategori);
@@ -282,36 +282,39 @@ class WarungJava {
             return;
         }
 
-        tampilMenu(daftarMenu);
+        // Tampilkan menu untuk referensi nama
+        tampilMenu(daftarMenu); 
+        
         System.out.println("\n--- Hapus Menu ---");
 
         while (true) {
-            System.out.print("Masukkan Nomor Menu yang ingin dihapus (atau 'batal'): ");
-            String input = scanner.nextLine().trim();
+            System.out.print("Masukkan Nama Menu yang ingin dihapus (atau 'batal'): ");
+            String inputNama = scanner.nextLine().trim();
             
-            if (input.equalsIgnoreCase("batal")) return;
+            if (inputNama.equalsIgnoreCase("batal")) {
+                System.out.println("Penghapusan dibatalkan. Kembali ke menu pengelolaan...");
+                return;
+            }
 
-            try {
-                int nomor = Integer.parseInt(input);
-                int index = nomor - 1;
+            // 1. Cari objek Menu berdasarkan nama
+            Menu hapusMenu = cariMenu(inputNama, daftarMenu); 
 
-                if (index >= 0 && index < daftarMenu.size()) {
-                    Menu menuToDelete = daftarMenu.get(index);
-                    System.out.print("Yakin ingin menghapus menu '" + menuToDelete.getNama() + "'? (Ya/Tidak): ");
-                    String konfirmasi = scanner.nextLine();
+            if (hapusMenu != null) {
+                
+                System.out.print("Yakin ingin menghapus menu **'" + hapusMenu.getNama() + "'**? (Ya/Tidak): ");
+                String konfirmasi = scanner.nextLine();
 
-                    if (konfirmasi.equalsIgnoreCase("Ya")) {
-                        daftarMenu.remove(index);
-                        System.out.println("✅ Menu '" + menuToDelete.getNama() + "' berhasil dihapus.");
-                    } else {
-                        System.out.println("Penghapusan dibatalkan.");
-                    }
-                    return; // Kembali ke menu pengelolaan setelah selesai
+                if (konfirmasi.equalsIgnoreCase("Ya")) {
+                    // 2. Hapus objek dari List
+                    daftarMenu.remove(hapusMenu);
+                    System.out.println("✅ Menu **'" + hapusMenu.getNama() + "'** berhasil dihapus.");
                 } else {
-                    System.err.println("❌ Nomor menu tidak valid. Coba lagi.");
+                    System.out.println("Penghapusan dibatalkan.");
                 }
-            } catch (NumberFormatException e) {
-                System.err.println("❌ Input harus berupa angka.");
+                return; // Kembali ke menu pengelolaan setelah selesai
+                
+            } else {
+                System.err.println("❌ Maaf, menu '" + inputNama + "' tidak ditemukan. Coba lagi.");
             }
         }
     }
@@ -323,15 +326,14 @@ class WarungJava {
        int totBiaya = 0;
        int diskon = 0;
        int pelayanan = 20000;
+       String gratisMinuman = "";
+       boolean adaMinuman = false;
        
        System.out.println("\n========================================");
        System.out.println("             >>Warung Java<<            ");
        System.out.println("            >>Struk Pesanan<<           ");
        System.out.println("========================================");
        System.out.println("");
-
-       String gratisMinuman = "";
-       boolean adaMinuman = false;
        
        for (int i = 0; i < pesanMenu.size(); i++) {
            Menu menu = pesanMenu.get(i);
